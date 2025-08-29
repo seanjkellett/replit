@@ -324,13 +324,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Sort messages by creation time (oldest first)
-      messages.sort((a, b) => {
-        const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return aTime - bTime; // Back to oldest first
-      });
-
       res.json(messages);
     } catch (error) {
       console.error("Get messages error:", error);
