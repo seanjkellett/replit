@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, MessageSquare } from "lucide-react";
+import { Loader2, Home } from "lucide-react";
 import { authApi, setAuthToken } from "@/lib/mattermost";
 import { loginSchema, type LoginRequest } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
@@ -54,7 +54,7 @@ export default function Login() {
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-              <MessageSquare className="w-6 h-6 text-primary-foreground" />
+              <Home className="w-6 h-6 text-primary-foreground" />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold">Village</CardTitle>
