@@ -324,6 +324,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      // Debug: Print message order to console
+      console.log("Messages order being sent:");
+      messages.forEach((msg, index) => {
+        console.log(`${index}: ${msg.createdAt} - ${msg.content.substring(0, 50)}...`);
+      });
+      
       res.json(messages);
     } catch (error) {
       console.error("Get messages error:", error);
