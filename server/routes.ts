@@ -328,7 +328,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       messages.sort((a, b) => {
         const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return bTime - aTime;
+        return aTime - bTime; // Back to oldest first
       });
 
       res.json(messages);
