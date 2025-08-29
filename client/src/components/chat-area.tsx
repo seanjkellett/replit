@@ -33,11 +33,12 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Poll for messages every 3 seconds
+  // Poll for messages every 5 seconds to reduce flicker
   const { data: messages = [], isLoading, refetch } = useQuery({
     queryKey: ["/api/channels", directMessage.channelId, "messages"],
     queryFn: () => messagesApi.getMessages(directMessage.channelId),
-    refetchInterval: 3000, // Poll every 3 seconds
+    refetchInterval: 5000, // Poll every 5 seconds
+    refetchIntervalInBackground: false, // Don't poll when tab is not active
   });
 
   // Send message mutation
@@ -133,7 +134,7 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
             variant="ghost"
             size="sm"
             onClick={onToggleSidebar}
-            className="lg:hidden"
+            className="md:hidden"
             data-testid="button-toggle-sidebar-chat"
           >
             <Menu className="w-5 h-5" />

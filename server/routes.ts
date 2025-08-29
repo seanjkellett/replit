@@ -298,7 +298,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const post = postsData.posts[postId];
         if (!post) continue;
 
-        let message = await storage.getMessage(post.id);
+        // Look for existing message by Mattermost ID
+        let message;
+        const existingMessages = Array.from(storage['messages'].values());
+        message = existingMessages.find(m => m.mattermostId === post.id);
+        
         if (!message) {
           message = await storage.createMessage({
             mattermostId: post.id,
