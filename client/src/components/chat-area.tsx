@@ -191,42 +191,40 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
       </CardHeader>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full w-full">
-          <div className="p-4">
-            {isLoading ? (
-              <div className="space-y-4">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-muted rounded-full animate-pulse" />
-                    <div className="flex-1">
-                      <div className="w-32 h-4 bg-muted rounded animate-pulse mb-2" />
-                      <div className="w-48 h-16 bg-muted rounded-lg animate-pulse" />
-                    </div>
+      <div className="flex-1 min-h-0">
+        <div className="h-full overflow-auto p-4" data-testid="messages-scroll-container">
+          {isLoading ? (
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-muted rounded-full animate-pulse" />
+                  <div className="flex-1">
+                    <div className="w-32 h-4 bg-muted rounded animate-pulse mb-2" />
+                    <div className="w-48 h-16 bg-muted rounded-lg animate-pulse" />
                   </div>
-                ))}
-              </div>
-            ) : messages.length === 0 ? (
-              <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
-                <div className="text-center text-muted-foreground">
-                  <h3 className="text-lg font-semibold mb-2">Start a conversation</h3>
-                  <p>Send a message to get the conversation started!</p>
                 </div>
+              ))}
+            </div>
+          ) : messages.length === 0 ? (
+            <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+              <div className="text-center text-muted-foreground">
+                <h3 className="text-lg font-semibold mb-2">Start a conversation</h3>
+                <p>Send a message to get the conversation started!</p>
               </div>
-            ) : (
-              <div className="space-y-4">
-                {messages.map((message) => (
-                  <MessageBubble
-                    key={message.id}
-                    message={message}
-                    currentUser={currentUser}
-                  />
-                ))}
-                <div ref={messagesEndRef} />
-              </div>
-            )}
-          </div>
-        </ScrollArea>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {messages.map((message) => (
+                <MessageBubble
+                  key={message.id}
+                  message={message}
+                  currentUser={currentUser}
+                />
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Message Input */}
