@@ -191,8 +191,8 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
       </CardHeader>
 
       {/* Messages Area */}
-      <div className="flex-1 min-h-0">
-        <div className="h-full overflow-auto p-4" data-testid="messages-scroll-container">
+      <ScrollArea className="flex-1" data-testid="messages-container">
+        <div className="p-4">
           {isLoading ? (
             <div className="space-y-4">
               {[...Array(3)].map((_, i) => (
@@ -225,7 +225,7 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
             </div>
           )}
         </div>
-      </div>
+      </ScrollArea>
 
       {/* Message Input */}
       <Card className="m-4 mt-0">
