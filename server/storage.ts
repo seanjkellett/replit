@@ -117,10 +117,10 @@ export class MemStorage implements IStorage {
       .sort((a, b) => {
         const aTime = a.createdAt ? a.createdAt.getTime() : 0;
         const bTime = b.createdAt ? b.createdAt.getTime() : 0;
-        return aTime - bTime;
+        return bTime - aTime; // Reversed: newest first
       });
     
-    return channelMessages.slice(-limit);
+    return channelMessages.slice(0, limit).reverse(); // Take first N, then reverse to show oldest first
   }
 
   async createMessage(insertMessage: InsertMessage): Promise<Message> {
