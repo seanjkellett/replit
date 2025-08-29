@@ -126,72 +126,74 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
   const otherUser = directMessage.otherUser;
 
   return (
-    <div className="flex-1 flex flex-col">
-      {/* Chat Header */}
-      <CardHeader className="border-b border-border p-4 flex-row items-center justify-between space-y-0">
-        <div className="flex items-center space-x-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleSidebar}
-            className="md:hidden"
-            data-testid="button-toggle-sidebar-chat"
-          >
-            <Menu className="w-5 h-5" />
-          </Button>
-          <div className="relative">
-            <Avatar className="w-10 h-10">
-              <AvatarImage src={otherUser.avatar} />
-              <AvatarFallback>{getInitials(otherUser)}</AvatarFallback>
-            </Avatar>
-            <Circle 
-              className={`absolute -bottom-1 -right-1 w-3 h-3 ${getStatusColor(otherUser.status || "offline")} rounded-full border-2 border-background fill-current`}
-            />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-foreground">
-              {otherUser.firstName 
-                ? `${otherUser.firstName} ${otherUser.lastName}`.trim()
-                : otherUser.username
-              }
-            </h2>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground capitalize">
-                {otherUser.status || "offline"}
-              </span>
+    <div className="flex-1 flex flex-col h-full">
+      {/* Fixed Chat Header */}
+      <div className="flex-shrink-0">
+        <CardHeader className="border-b border-border p-4 flex-row items-center justify-between space-y-0">
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onToggleSidebar}
+              className="md:hidden"
+              data-testid="button-toggle-sidebar-chat"
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+            <div className="relative">
+              <Avatar className="w-10 h-10">
+                <AvatarImage src={otherUser.avatar} />
+                <AvatarFallback>{getInitials(otherUser)}</AvatarFallback>
+              </Avatar>
+              <Circle 
+                className={`absolute -bottom-1 -right-1 w-3 h-3 ${getStatusColor(otherUser.status || "offline")} rounded-full border-2 border-background fill-current`}
+              />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">
+                {otherUser.firstName 
+                  ? `${otherUser.firstName} ${otherUser.lastName}`.trim()
+                  : otherUser.username
+                }
+              </h2>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-muted-foreground capitalize">
+                  {otherUser.status || "offline"}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-            data-testid="button-video-call"
-          >
-            <Video className="w-4 h-4" />
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-            data-testid="button-voice-call"
-          >
-            <Phone className="w-4 h-4" />
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-            data-testid="button-chat-info"
-          >
-            <Info className="w-4 h-4" />
-          </Button>
-        </div>
-      </CardHeader>
+          <div className="flex items-center space-x-2">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              data-testid="button-video-call"
+            >
+              <Video className="w-4 h-4" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              data-testid="button-voice-call"
+            >
+              <Phone className="w-4 h-4" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              data-testid="button-chat-info"
+            >
+              <Info className="w-4 h-4" />
+            </Button>
+          </div>
+        </CardHeader>
+      </div>
 
-      {/* Messages Area */}
-      <ScrollArea className="flex-1" data-testid="messages-container">
+      {/* Scrollable Messages Area */}
+      <ScrollArea className="flex-1 min-h-0" data-testid="messages-container">
         <div className="p-4">
           {isLoading ? (
             <div className="space-y-4">
@@ -206,7 +208,7 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
               ))}
             </div>
           ) : messages.length === 0 ? (
-            <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+            <div className="flex items-center justify-center min-h-[200px]">
               <div className="text-center text-muted-foreground">
                 <h3 className="text-lg font-semibold mb-2">Start a conversation</h3>
                 <p>Send a message to get the conversation started!</p>
@@ -227,59 +229,61 @@ export default function ChatArea({ currentUser, directMessage, onToggleSidebar }
         </div>
       </ScrollArea>
 
-      {/* Message Input */}
-      <Card className="m-4 mt-0">
-        <CardContent className="p-4">
-          <div className="flex items-end space-x-3">
-            <div className="flex-1">
-              <div className="relative">
-                <Textarea
-                  ref={textareaRef}
-                  value={messageContent}
-                  onChange={(e) => setMessageContent(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  placeholder="Type a message..."
-                  className="resize-none min-h-[40px] max-h-[150px] pr-12"
-                  data-testid="textarea-message"
-                />
+      {/* Fixed Message Input */}
+      <div className="flex-shrink-0">
+        <Card className="m-4 mt-0">
+          <CardContent className="p-4">
+            <div className="flex items-end space-x-3">
+              <div className="flex-1">
+                <div className="relative">
+                  <Textarea
+                    ref={textareaRef}
+                    value={messageContent}
+                    onChange={(e) => setMessageContent(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    placeholder="Type a message..."
+                    className="resize-none min-h-[40px] max-h-[150px] pr-12"
+                    data-testid="textarea-message"
+                  />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute bottom-2 right-2 h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
+                    data-testid="button-attach-file"
+                  >
+                    <Paperclip className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+              <Button
+                onClick={handleSendMessage}
+                disabled={!messageContent.trim() || sendMessageMutation.isPending}
+                className="px-4 py-2 h-auto"
+                data-testid="button-send-message"
+              >
+                <Send className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Send</span>
+              </Button>
+            </div>
+
+            {/* Quick Reactions */}
+            <div className="flex items-center space-x-2 mt-3">
+              <span className="text-xs text-muted-foreground">Quick reactions:</span>
+              {["👍", "❤️", "😊", "👏"].map((emoji) => (
                 <Button
+                  key={emoji}
                   variant="ghost"
                   size="sm"
-                  className="absolute bottom-2 right-2 h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
-                  data-testid="button-attach-file"
+                  className="h-6 w-6 p-0 text-lg hover:scale-110 transition-transform"
+                  data-testid={`reaction-${emoji}`}
                 >
-                  <Paperclip className="w-4 h-4" />
+                  {emoji}
                 </Button>
-              </div>
+              ))}
             </div>
-            <Button
-              onClick={handleSendMessage}
-              disabled={!messageContent.trim() || sendMessageMutation.isPending}
-              className="px-4 py-2 h-auto"
-              data-testid="button-send-message"
-            >
-              <Send className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Send</span>
-            </Button>
-          </div>
-
-          {/* Quick Reactions */}
-          <div className="flex items-center space-x-2 mt-3">
-            <span className="text-xs text-muted-foreground">Quick reactions:</span>
-            {["👍", "❤️", "😊", "👏"].map((emoji) => (
-              <Button
-                key={emoji}
-                variant="ghost"
-                size="sm"
-                className="h-6 w-6 p-0 text-lg hover:scale-110 transition-transform"
-                data-testid={`reaction-${emoji}`}
-              >
-                {emoji}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
