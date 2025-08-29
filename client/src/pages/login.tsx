@@ -23,7 +23,7 @@ export default function Login() {
     defaultValues: {
       username: "",
       password: "",
-      serverUrl: "https://",
+      serverUrl: "https://mattermost.ranchos.cloud",
     },
   });
 
@@ -64,22 +64,6 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="serverUrl">Server URL</Label>
-              <Input
-                id="serverUrl"
-                type="url"
-                placeholder="https://your-mattermost-server.com"
-                {...form.register("serverUrl")}
-                data-testid="input-server-url"
-              />
-              {form.formState.errors.serverUrl && (
-                <p className="text-sm text-destructive">
-                  {form.formState.errors.serverUrl.message}
-                </p>
-              )}
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="username">Username or Email</Label>
               <Input
