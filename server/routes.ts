@@ -318,7 +318,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Get user info
         const user = await storage.getUserByMattermostId(post.user_id);
-        messages.push({
+        messages.unshift({
           ...message,
           user,
         });
