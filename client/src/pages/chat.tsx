@@ -79,8 +79,8 @@ export default function Chat() {
         className={`${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } ${
-          isMobile ? "fixed" : "relative"
-        } z-50 transition-transform duration-300 ease-in-out`}
+          isMobile ? "fixed inset-y-0 left-0" : "relative"
+        } z-50 transition-transform duration-300 ease-in-out h-full`}
       >
         <Sidebar
           currentUser={currentUser}
@@ -91,7 +91,7 @@ export default function Chat() {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Mobile Header */}
         {isMobile && (
           <div className="lg:hidden bg-card border-b border-border p-4 flex items-center justify-between">
