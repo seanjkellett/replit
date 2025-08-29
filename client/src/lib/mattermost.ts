@@ -95,31 +95,3 @@ export const clearAuthToken = () => {
   localStorage.removeItem("mattermost_token");
 };
 
-// Setup auth header for API requests
-export const setupAuthInterceptor = () => {
-  const originalApiRequest = apiRequest;
-  
-  return async (method: string, url: string, data?: unknown) => {
-    const token = getAuthToken();
-    if (token) {
-      const headers = { Authorization: `Bearer ${token}` };
-      const response = await fetch(url, {
-        method,
-        headers: {
-          ...headers,
-          ...(data ? { "Content-Type": "application/json" } : {}),
-        },
-        body: data ? JSON.stringify(data) : undefined,
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        const text = (await response.text()) || response.statusText;
-        throw new Error(`${response.status}: ${text}`);
-      }
-      return response;
-    }
-    
-    return originalApiRequest(method, url, data);
-  };
-};
