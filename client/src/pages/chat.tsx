@@ -126,7 +126,7 @@ export default function Chat() {
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center text-muted-foreground">
-              <h2 className="text-xl font-semibold mb-2">Welcome to Mattermost Chat</h2>
+              <h2 className="text-xl font-semibold mb-2">Welcome to Village</h2>
               <p>Select a conversation to start chatting</p>
             </div>
           </div>

@@ -121,7 +121,7 @@ export default function Sidebar({ currentUser, onChatSelect, activeChat, onClose
       {/* Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold text-foreground">Mattermost Chat</h1>
+          <h1 className="text-lg font-semibold text-foreground">Village</h1>
           <Button 
             variant="ghost" 
             size="sm" 

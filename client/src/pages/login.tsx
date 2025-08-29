@@ -57,7 +57,7 @@ export default function Login() {
               <MessageSquare className="w-6 h-6 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Mattermost Chat</CardTitle>
+          <CardTitle className="text-2xl font-bold">Village</CardTitle>
           <CardDescription>
             Sign in to your Mattermost account to start chatting
           </CardDescription>
