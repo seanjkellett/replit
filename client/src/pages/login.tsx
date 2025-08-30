@@ -35,7 +35,7 @@ export default function Login() {
         title: "Login successful",
         description: `Welcome back, ${data.user.username}!`,
       });
-      navigate("/");
+      navigate("/chat");
     },
     onError: (error) => {
       console.error("Login error:", error);

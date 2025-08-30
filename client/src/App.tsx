@@ -8,11 +8,13 @@ import { getAuthToken } from "./lib/mattermost";
 import NotFound from "@/pages/not-found";
 import Login from "@/pages/login";
 import Chat from "@/pages/chat";
+import Landing from "@/pages/landing";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Chat} />
+      <Route path="/" component={Landing} />
+      <Route path="/chat" component={Chat} />
       <Route path="/login" component={Login} />
       <Route component={NotFound} />
     </Switch>
