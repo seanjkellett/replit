@@ -36,7 +36,8 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
+// Export a function that can be called by Electron
+export async function createServer(port?: number) {
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -47,25 +48,36 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
+  // Setup Vite in development or serve static files in production
+  const isElectron = process.env.ELECTRON_APP === 'true';
+  const isDev = app.get("env") === "development";
+  
+  if (isDev && !isElectron) {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+  const serverPort = port || parseInt(process.env.PORT || '5000', 10);
+  
+  return new Promise((resolve) => {
+    // Bind to localhost only when running in Electron for security
+    const host = isElectron ? "127.0.0.1" : "0.0.0.0";
+    
+    const httpServer = server.listen({
+      port: serverPort,
+      host,
+      reusePort: !isElectron, // Don't reuse port in Electron
+    }, () => {
+      log(`serving on port ${serverPort} (${host})`);
+      resolve(httpServer);
+    });
   });
-})();
+}
+
+// Auto-start server when run directly (not imported)
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url.includes('index.ts')) {
+  (async () => {
+    await createServer();
+  })();
+}
